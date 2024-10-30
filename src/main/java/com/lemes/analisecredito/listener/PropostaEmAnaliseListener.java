@@ -1,15 +1,19 @@
 package com.lemes.analisecredito.listener;
 
 import com.lemes.analisecredito.domain.Proposta;
+import com.lemes.analisecredito.service.AnaliseCreditoService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PropostaEmAnaliseListener {
 
-    @RabbitListener(queues = "${proposta-pendente.ms-analise-credito}")
-    public void propostaEmAnalise(Proposta proposta) {
+    @Autowired
+    private AnaliseCreditoService analiseCreditoService;
 
+    @RabbitListener(queues = "${rabbitmq.queue.proposta.pendente}")
+    public void propostaEmAnalise(Proposta proposta) {
+        analiseCreditoService.analisar(proposta);
     }
 }
