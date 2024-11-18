@@ -1,0 +1,17 @@
+version: "1.0"
+services:
+  analisecredito-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: analisecredito-app
+    networks:
+      - proposta-network
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASS=guest
+
+networks:
+  proposta-network:
+    external: true
